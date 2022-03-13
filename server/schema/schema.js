@@ -5,11 +5,11 @@ var _ = require('lodash');
 
 
 //dummy data
-var usersData = [   {id: '1', name: 'bond', age: 34},
-                    {id: '25', name: 'infinity', age: 21},
-                    {id: '45', name: 'RDJ', age: 44},
-                    {id: '478', name: 'strange', age: 42},
-                    {id: '63', name: 'Tom', age: 22},
+var usersData = [   {id: '1', name: 'bond', age: 34, profession: 'Developer'},
+                    {id: '25', name: 'infinity', age: 21, profession: 'Designer'},
+                    {id: '45', name: 'RDJ', age: 44, profession: 'Singer'},
+                    {id: '478', name: 'strange', age: 42, profession: 'Teacher'},
+                    {id: '63', name: 'Tom', age: 22, profession: 'Painter'},
                 ];
 const {
 
@@ -28,10 +28,21 @@ const UserType = new GraphQLObjectType({
     fields: ()=>({
         id: {type: GraphQLString},
         name: {type: GraphQLString},
-        age: {type: GraphQLInt}
+        age: {type: GraphQLInt},
+        profession: {type: GraphQLString}
     })
 });
 
+const HobbyType = new GraphQLObjectType({
+    name: 'Hobby',
+    descrpition: 'Hobby Description',
+    fields: ()=>({
+        id: {type: GraphQLID},
+        title: {type: GraphQLString},
+        descrpition: {type: GraphQLString}
+
+    })
+});
 //RootQuery
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
@@ -47,6 +58,16 @@ const RootQuery = new GraphQLObjectType({
             // get and return data from a datasource
             }
         
+        },
+
+        hobby: {
+            type: HobbyType,
+            args: {id: {type:GraphQLID}},
+
+            resolve(parent, args){
+              //resolve with data
+            }
+
         }
     }
 
