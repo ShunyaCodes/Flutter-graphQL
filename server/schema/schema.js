@@ -11,6 +11,16 @@ var usersData = [   {id: '1', name: 'bond', age: 34, profession: 'Developer'},
                     {id: '478', name: 'strange', age: 42, profession: 'Teacher'},
                     {id: '63', name: 'Tom', age: 22, profession: 'Painter'},
                 ];
+
+hobbiesData = [ {id: '1', title: 'Programming', descrpition: 'Using computers to make a better place'},
+                {id: '2', title: 'Rowing', descrpition: 'Feel the drift'},
+                {id: '3', title: 'Swimming', descrpition: 'fly through water'},
+                {id: '4', title: 'Fencing', descrpition: 'A hobby for fency people'},
+                {id: '5', title: 'Hiking', descrpition: 'to climb the mountain'},
+            ];
+
+
+
 const {
 
     GraphQLObjectType,
@@ -65,7 +75,8 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type:GraphQLID}},
 
             resolve(parent, args){
-              //resolve with data
+                return _.find(hobbiesData, {id: args.id})
+              //return data for our hobby
             }
 
         }
