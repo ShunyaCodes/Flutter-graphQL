@@ -12,17 +12,19 @@ var usersData = [   {id: '1', name: 'bond', age: 34, profession: 'Developer'},
                     {id: '63', name: 'Tom', age: 22, profession: 'Painter'},
                 ];
 
-hobbiesData = [ {id: '1', title: 'Programming', descrpition: 'Using computers to make a better place'},
-                {id: '2', title: 'Rowing', descrpition: 'Feel the drift'},
-                {id: '3', title: 'Swimming', descrpition: 'fly through water'},
-                {id: '4', title: 'Fencing', descrpition: 'A hobby for fency people'},
-                {id: '5', title: 'Hiking', descrpition: 'to climb the mountain'},
+hobbiesData = [ {id: '1', title: 'Programming', descrpition: 'Using computers to make a better place', userID: '1'},
+                {id: '2', title: 'Rowing', descrpition: 'Feel the drift', userID: '25'},
+                {id: '3', title: 'Swimming', descrpition: 'fly through water', userID: '45'},
+                {id: '4', title: 'Fencing', descrpition: 'A hobby for fency people', userID: '478'},
+                {id: '5', title: 'Hiking', descrpition: 'to climb the mountain', userID: '63'},
             ];
 
 
-postsData = [   {id: '1', comment: 'Building a mind'},
-                {id: '2', comment: 'A GraphQL project'},
-                {id: '3', comment: 'Flutter with GraqphQL'},
+postsData = [   {id: '1', comment: 'Building a mind', userID: '1'},
+                {id: '2', comment: 'A GraphQL project', userID: '25'},
+                {id: '3', comment: 'Flutter with GraqphQL', userID: '478'},
+                {id: '4', comment: 'Building a mind', userID: '1'},
+                {id: '4', comment: 'Building a mind', userID: '63'}
 ];
 
 
@@ -55,7 +57,14 @@ const HobbyType = new GraphQLObjectType({
     fields: ()=>({
         id: {type: GraphQLID},
         title: {type: GraphQLString},
-        descrpition: {type: GraphQLString}
+        descrpition: {type: GraphQLString},
+        user: {
+            type: UserType,
+            resolve(parent, args){
+                return _.find(usersData, {id: parent.userID})//returning the data for the user who have this hobby
+            }
+        }
+
 
     })
 });
@@ -65,7 +74,13 @@ const PostType = new GraphQLObjectType({
     descrpition: 'Post Description',
     fields: ()=> ({
         id: {type: GraphQLID},
-        comment : {type: GraphQLString}
+        comment : {type: GraphQLString},
+        user: {
+            type: UserType,
+            resolve(parent, args){
+                return _.find(usersData, {id: parent.userID}) //returning the data for the user who wrote this post
+            }
+        }
     
     })
 });
@@ -107,6 +122,7 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLID}},
 
             resolve(parent, args){
+                //return data for post
                 return _.find(postsData, {id: args.id})
             }
         }
