@@ -124,6 +124,13 @@ const RootQuery = new GraphQLObjectType({
         
         },
 
+        users: {
+            type: new GraphQLList(UserType),
+            resolve(parent, args){
+                return usersData;
+            }
+        },
+
         hobby: {
             type: HobbyType,
             args: {id: {type:GraphQLID}},
