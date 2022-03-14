@@ -112,6 +112,7 @@ const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
     descrpition: 'Description',
     fields: {
+        //Query for fetch user
         user: {
             type: UserType,
             args: {id: {type: GraphQLString}},
@@ -123,14 +124,15 @@ const RootQuery = new GraphQLObjectType({
             }
         
         },
-
+        //Query for fetch all users
         users: {
             type: new GraphQLList(UserType),
             resolve(parent, args){
                 return usersData;
             }
         },
-
+        
+        //Query for fetching hobby
         hobby: {
             type: HobbyType,
             args: {id: {type:GraphQLID}},
@@ -142,6 +144,15 @@ const RootQuery = new GraphQLObjectType({
 
         },
 
+        //Query for fetching all hobbies
+        hobbies: {
+            type: new GraphQLList(HobbyType),
+            resolve(parent, args){
+                return hobbiesData;
+            }
+        },
+
+        //Query for fetching post
         post: {
             type: PostType,
             args: {id: {type: GraphQLID}},
@@ -150,7 +161,15 @@ const RootQuery = new GraphQLObjectType({
                 //return data for post
                 return _.find(postsData, {id: args.id})
             }
-        }
+        },
+
+        //Query for Fetching all Posts
+        posts: {
+            type: new GraphQLList(PostType),
+            resolve(parent, args){
+                return postsData;
+            }
+        },
 
 
     }
