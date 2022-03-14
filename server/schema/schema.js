@@ -156,12 +156,13 @@ const Mutation = new GraphQLObjectType({
 
     name: 'Mutation',
     fields:{
+        //Mutation for creating User
         createUser: {
             type: UserType,
             args: {
                // id: {type: GraphQLID}
                 name: {type: GraphQLString},
-                age: {type: GraphQLString},
+                age: {type: GraphQLInt },
                 profession: {type: GraphQLString}
             },
 
@@ -173,7 +174,49 @@ const Mutation = new GraphQLObjectType({
                 }
                 return user;
             }
+        },
+
+
+        //Mutation for creating post
+        createPost: {
+            type: PostType,
+            args: {
+                //id : {type: GraphQLID},
+                comment: {type: GraphQLString},
+                userID: {type: GraphQLID}
+            },
+            resolve(parent, args){
+                let post = {
+                    comment: args.comment,
+                    userID: args.userID,
+                }
+                return post;
+            }
+        },
+
+
+        //Mutation for creating hobby
+
+        createHobby: {
+            type: HobbyType,
+            args: {
+                //id: {type: GraphQLID},
+                title: {type: GraphQLString},
+                descrpition: {type: GraphQLString},
+                userID: {type: GraphQLID},
+
+            },
+
+            resolve (parent, args){
+                let hobby = {
+                    title: args.title,
+                    descrpition: args.descrpition,
+                    userID: args.userID,
+                }
+                return hobby;
+            }
         }
+
     }
 
 });
