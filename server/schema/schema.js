@@ -55,17 +55,19 @@ const UserType = new GraphQLObjectType({
         
 
         //query to get all hobbies related to user
-        hobby: {
+        hobbies: {
             type: new GraphQLList(HobbyType),
             resolve(parent, args){
-                return _.filter(hobbiesData, {userId: parent.id})
+                return Hobby.find({userId: parent.id}) // for mongoDB
+               // return _.filter(hobbiesData, {userId: parent.id}) //for dummy data
             }
         },
         // query to get all posts to  user
         posts: {
                 type: new GraphQLList(PostType),
                 resolve(parent, args){
-                    return _.filter(postsData, {userId: parent.id})
+                    return Post.find({userId: parent.id}) // for MongoDB
+                   // return _.filter(postsData, {userId: parent.id}) // for dummy data
                 }
 
         }
@@ -121,9 +123,9 @@ const RootQuery = new GraphQLObjectType({
             args: {id: {type: GraphQLString}},
 
             resolve(parent, args){
-                return _.find(usersData, {id: args.id})
-            // we resolve with data
-            // get and return data from a datasource
+                return User.findById(args.id);
+                //return _.find(usersData, {id: args.id}) // for dummy data
+
             }
         
         },
