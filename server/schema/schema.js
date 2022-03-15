@@ -15,19 +15,19 @@ const Post = require("../model/post");
 //                     {id: '63', name: 'Tom', age: 22, profession: 'Painter'},
 //                 ];
 
-// hobbiesData = [ {id: '1', title: 'Programming', descrpition: 'Using computers to make a better place', userID: '1'},
-//                 {id: '2', title: 'Rowing', descrpition: 'Feel the drift', userID: '25'},
-//                 {id: '3', title: 'Swimming', descrpition: 'fly through water', userID: '45'},
-//                 {id: '4', title: 'Fencing', descrpition: 'A hobby for fency people', userID: '478'},
-//                 {id: '5', title: 'Hiking', descrpition: 'to climb the mountain', userID: '63'},
+// hobbiesData = [ {id: '1', title: 'Programming', descrpition: 'Using computers to make a better place', userId: '1'},
+//                 {id: '2', title: 'Rowing', descrpition: 'Feel the drift', userId: '25'},
+//                 {id: '3', title: 'Swimming', descrpition: 'fly through water', userId: '45'},
+//                 {id: '4', title: 'Fencing', descrpition: 'A hobby for fency people', userId: '478'},
+//                 {id: '5', title: 'Hiking', descrpition: 'to climb the mountain', userId: '63'},
 //             ];
 
 
-// postsData = [   {id: '1', comment: 'Building a mind', userID: '1'},
-//                 {id: '2', comment: 'A GraphQL project', userID: '25'},
-//                 {id: '3', comment: 'Flutter with GraqphQL', userID: '478'},
-//                 {id: '4', comment: 'Building a mind', userID: '1'},
-//                 {id: '4', comment: 'Building a mind', userID: '63'}
+// postsData = [   {id: '1', comment: 'Building a mind', userId: '1'},
+//                 {id: '2', comment: 'A GraphQL project', userId: '25'},
+//                 {id: '3', comment: 'Flutter with GraqphQL', userId: '478'},
+//                 {id: '4', comment: 'Building a mind', userId: '1'},
+//                 {id: '4', comment: 'Building a mind', userId: '63'}
 // ];
 
 
@@ -58,14 +58,14 @@ const UserType = new GraphQLObjectType({
         hobby: {
             type: new GraphQLList(HobbyType),
             resolve(parent, args){
-                return _.filter(hobbiesData, {userID: parent.id})
+                return _.filter(hobbiesData, {userId: parent.id})
             }
         },
         // query to get all posts to  user
         posts: {
                 type: new GraphQLList(PostType),
                 resolve(parent, args){
-                    return _.filter(postsData, {userID: parent.id})
+                    return _.filter(postsData, {userId: parent.id})
                 }
 
         }
@@ -82,7 +82,7 @@ const HobbyType = new GraphQLObjectType({
         user: {
             type: UserType,
             resolve(parent, args){
-                return _.find(usersData, {id: parent.userID})//returning the data for the user who have this hobby
+                return _.find(usersData, {id: parent.userId})//returning the data for the user who have this hobby
             }
         }
 
@@ -99,7 +99,7 @@ const PostType = new GraphQLObjectType({
         user: {
             type: UserType,
             resolve(parent, args){
-                return _.find(usersData, {id: parent.userID}) //returning the data for the user who wrote this post
+                return _.find(usersData, {id: parent.userId}) //returning the data for the user who wrote this post
             }
         }
     
@@ -212,12 +212,12 @@ const Mutation = new GraphQLObjectType({
             args: {
                 //id : {type: GraphQLID},
                 comment: {type: GraphQLString},
-                userID: {type: GraphQLID}
+                userId: {type: GraphQLID}
             },
             resolve(parent, args){
                 let post = {
                     comment: args.comment,
-                    userID: args.userID,
+                    userId: args.userId,
                 }
                 return post;
             }
@@ -232,7 +232,7 @@ const Mutation = new GraphQLObjectType({
                 //id: {type: GraphQLID},
                 title: {type: GraphQLString},
                 descrpition: {type: GraphQLString},
-                userID: {type: GraphQLID},
+                userId: {type: GraphQLID},
 
             },
 
@@ -240,7 +240,7 @@ const Mutation = new GraphQLObjectType({
                 let hobby = {
                     title: args.title,
                     descrpition: args.descrpition,
-                    userID: args.userID,
+                    userId: args.userId,
                 }
                 return hobby;
             }
