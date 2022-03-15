@@ -1,6 +1,7 @@
 # Flutter-graphQL
 
 /node_modules/
+/package-lock.json
 
 # In nodemon.json store your Database Name, Username, Password and fetch it in app.js
 /nodemon.json  
