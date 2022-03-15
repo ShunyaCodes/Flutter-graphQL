@@ -215,11 +215,12 @@ const Mutation = new GraphQLObjectType({
                 userId: {type: GraphQLID}
             },
             resolve(parent, args){
-                let post = {
+                let post = Post({
                     comment: args.comment,
                     userId: args.userId,
-                }
-                return post;
+                });
+                return post.save();
+                
             }
         },
 
