@@ -15,11 +15,11 @@ const Post = require("../model/post");
 //                     {id: '63', name: 'Tom', age: 22, profession: 'Painter'},
 //                 ];
 
-// hobbiesData = [ {id: '1', title: 'Programming', descrpition: 'Using computers to make a better place', userId: '1'},
-//                 {id: '2', title: 'Rowing', descrpition: 'Feel the drift', userId: '25'},
-//                 {id: '3', title: 'Swimming', descrpition: 'fly through water', userId: '45'},
-//                 {id: '4', title: 'Fencing', descrpition: 'A hobby for fency people', userId: '478'},
-//                 {id: '5', title: 'Hiking', descrpition: 'to climb the mountain', userId: '63'},
+// hobbiesData = [ {id: '1', title: 'Programming', description: 'Using computers to make a better place', userId: '1'},
+//                 {id: '2', title: 'Rowing', description: 'Feel the drift', userId: '25'},
+//                 {id: '3', title: 'Swimming', description: 'fly through water', userId: '45'},
+//                 {id: '4', title: 'Fencing', description: 'A hobby for fency people', userId: '478'},
+//                 {id: '5', title: 'Hiking', description: 'to climb the mountain', userId: '63'},
 //             ];
 
 
@@ -46,7 +46,7 @@ const {
 //create types
 const UserType = new GraphQLObjectType({
     name: 'User',
-    descrpition: 'Documentation for user..',
+    description: 'Documentation for user..',
     fields: ()=>({
         id: {type: GraphQLString},
         name: {type: GraphQLString},
@@ -74,11 +74,11 @@ const UserType = new GraphQLObjectType({
 
 const HobbyType = new GraphQLObjectType({
     name: 'Hobby',
-    descrpition: 'Hobby Description',
+    description: 'Hobby Description',
     fields: ()=>({
         id: {type: GraphQLID},
         title: {type: GraphQLString},
-        descrpition: {type: GraphQLString},
+        description: {type: GraphQLString},
         user: {
             type: UserType,
             resolve(parent, args){
@@ -92,7 +92,7 @@ const HobbyType = new GraphQLObjectType({
 
 const PostType = new GraphQLObjectType({
     name : 'Post',
-    descrpition: 'Post Description',
+    description: 'Post Description',
     fields: ()=> ({
         id: {type: GraphQLID},
         comment : {type: GraphQLString},
@@ -113,7 +113,7 @@ const PostType = new GraphQLObjectType({
 //RootQuery
 const RootQuery = new GraphQLObjectType({
     name: 'RootQueryType',
-    descrpition: 'Description',
+    description: 'Description',
     fields: {
         //Query for fetch user
         user: {
@@ -232,18 +232,18 @@ const Mutation = new GraphQLObjectType({
             args: {
                 //id: {type: GraphQLID},
                 title: {type: GraphQLString},
-                descrpition: {type: GraphQLString},
+                description: {type: GraphQLString},
                 userId: {type: GraphQLID},
 
             },
 
             resolve (parent, args){
-                let hobby = {
+                let hobby = Hobby({
                     title: args.title,
-                    descrpition: args.descrpition,
+                    description: args.description,
                     userId: args.userId,
-                }
-                return hobby;
+                });
+                return hobby.save();
             }
         }
 
