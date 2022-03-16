@@ -3,6 +3,7 @@ var _ = require('lodash');
 const User = require("../model/user");
 const Hobby = require("../model/hobby");
 const Post = require("../model/post");
+const { type } = require('express/lib/response');
 
 
 
@@ -208,6 +209,31 @@ const Mutation = new GraphQLObjectType({
             }
         },
 
+        
+        //Update User
+        UpdateUser: {
+            type: UserType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLString)},
+                name: {type: GraphQLNonNull(GraphQLString)},
+                age: {type: GraphQLNonNull(GraphQLInt) },
+                profession: {type: GraphQLString},
+            },
+            resolve(parent, args){
+                return updateUser = User.findByIdAndUpdate(
+                    args.id,
+                    {
+                        $set: {
+                            name: args.name,
+                            age: args.age,
+                            profession: args.profession,
+                        }
+                    },
+                    {new: true} //send back the updated object type
+                )
+            }
+        },
+
 
         //Mutation for creating post
         CreatePost: {
@@ -226,6 +252,30 @@ const Mutation = new GraphQLObjectType({
                 
             }
         },
+
+        //Update Post method
+        UpdatePost:{
+            type: PostType,
+            args:
+            {   
+                id: {type: GraphQLNonNull(GraphQLString)},
+                comment: {type: GraphQLNonNull(GraphQLString)},
+                
+            },
+            resolve(parent, args){
+                return UpdatePost = Post.findByIdAndUpdate(
+                    args.id,
+                    {
+                        $set: {
+                            comment: args.comment,
+                        
+                        }
+                    },
+                    {new: true} //send back the updated object type
+                )
+            }
+        },
+
 
 
         //Mutation for creating hobby
@@ -248,7 +298,32 @@ const Mutation = new GraphQLObjectType({
                 });
                 return hobby.save();
             }
+        },
+
+        //update hobby
+        
+        UpdateHobby: {
+            type: HobbyType,
+            args: {
+                id: {type: GraphQLNonNull(GraphQLString)},
+                title: {type: GraphQLNonNull(GraphQLString)},
+                description: {type: GraphQLNonNull(GraphQLString)},
+            },
+            resolve(parent, args){
+                return updateHobby = Hobby.findByIdAndUpdate(
+                    args.id,
+                    {
+                        $set:{
+                            title: args.title,
+                            description: args.description,
+                        }
+                    },
+                    {new: true} //send back the updated object type
+                )
+            }
         }
+        
+
 
     }
 
