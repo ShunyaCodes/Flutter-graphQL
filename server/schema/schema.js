@@ -122,15 +122,11 @@ const RootQuery = new GraphQLObjectType({
         //Query for fetch user
         user: {
             type: UserType,
-            args: {id: {type: GraphQLString}},
-
-            resolve(parent, args){
-                return User.findById(args.id);
-                //return _.find(usersData, {id: args.id}) // for dummy data
-
-            }
-        
-        },
+            args: { id: { type: GraphQLString } },
+            resolve(parent, args) {
+            return User.findById(args.id);
+            },
+            },
         //Query for fetch all users
         users: {
             type: new GraphQLList(UserType),
@@ -142,40 +138,40 @@ const RootQuery = new GraphQLObjectType({
         //Query for fetching hobby
         hobby: {
             type: HobbyType,
-            args: {id: {type:GraphQLID}},
-
-            resolve(parent, args){
-                return _.find(hobbiesData, {id: args.id})
+            args: { id: { type: GraphQLID } },
+        
+            resolve(parent, argsf) {
               //return data for our hobby
-            }
-
+        
+            return Hobby.findById(args.id);
+            },
         },
 
         //Query for fetching all hobbies
         hobbies: {
             type: new GraphQLList(HobbyType),
-            resolve(parent, args){
-                return hobbiesData;
-            }
+        
+            resolve(parent, args) {
+            return Hobby.find({ id: args.userId });
+            },
         },
 
         //Query for fetching post
         post: {
             type: PostType,
-            args: {id: {type: GraphQLID}},
-
-            resolve(parent, args){
-                //return data for post
-                return _.find(postsData, {id: args.id})
-            }
+            args: { id: { type: GraphQLID } },
+        
+            resolve(parent, args) {
+            return Post.findById(args.id);
+            },
         },
 
         //Query for Fetching all Posts
         posts: {
             type: new GraphQLList(PostType),
-            resolve(parent, args){
-                return postsData;
-            }
+            resolve(parent, args) {
+            return Post.find({});
+            },
         },
 
 
