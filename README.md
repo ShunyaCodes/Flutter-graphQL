@@ -1,2 +1,5 @@
-# Flutter with graphQL
-### Created graphQL API and a Client app with flutter. 
+# GraphQL with Flutter
+### Created an graphQL API 
+### Connected with MongoDB database
+### Deployed the API on Heroku
+
