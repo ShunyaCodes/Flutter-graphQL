@@ -7,7 +7,7 @@ void main() async {
   await initHiveForFlutter();
 
   final HttpLink link =
-      HttpLink('');
+      HttpLink('https://graphql-flutter-course.herokuapp.com/graphql');
   ValueNotifier<GraphQLClient> client = ValueNotifier(
       GraphQLClient(link: link, cache: GraphQLCache(store: HiveStore())));
 
